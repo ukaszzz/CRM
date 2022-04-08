@@ -30,7 +30,7 @@ class Db {
         return this._data;
     }
 
-    getOne() {
+    getOne(id) {
         return this._data.find(oneObj => oneObj.id === id)
     }
 

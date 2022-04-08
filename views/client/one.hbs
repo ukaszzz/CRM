@@ -1,0 +1,39 @@
+<h2>{{client.name}}</h2>
+<table class="headers-left">
+  <tbody>
+  <tr>
+    <th>
+      E-mail:
+    </th>
+    <td>
+      <a href="/client/{{client.email}}">{{client.name}}</a>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      Name:
+    </th>
+    <td>
+        {{client.name}}
+    </td>
+  </tr>
+  <tr>
+    <th>
+      date:
+    </th>
+    <td>
+        {{client.nextContactAt}}
+    </td>
+  </tr>
+  {{#if client.notes}}
+  <tr>
+    <th>
+      notes:
+    </th>
+    <td>
+      {{client.notes}}
+    </td>
+  </tr>
+  {{/if}}
+  </tbody>
+</table>

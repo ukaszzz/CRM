@@ -1,1 +1,3 @@
-[{"id":"3c00ddf5-1352-4f0c-a1ee-25f60a9b7952","name":"hehehehe","mail":"test2@mail.pl"}]
+[{"id":"3c00ddf5-1352-4f0c-a1ee-25f60a9b7952","name":"hehehehe","mail":"test2@mail.pl","notes": "", "nextContactAt":  "Monday"},
+  {"id":"3c00ddf5-1352-asds-a1ee-25f60a9b7952","name":"asdasd","mail":"3333@mail.pl","notes": "", "nextContactAt":  "Monday"},
+  {"id":"3c00ddf5-1352-33d3-a1ee-25f60a9b7952","name":"asdasd3","mail":"sssdas@mail.pl","notes": "", "nextContactAt":  "Monday"}]
