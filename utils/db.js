@@ -14,16 +14,24 @@ class Db {
        console.log(this._data);
     }
 
+    _save() {
+        writeFile(this.dbFilename, JSON.stringify(this._data), 'utf-8');
+    }
+
     async create(obj) {
         this._data.push({
             id: uuid(),
             ...obj
         });
-        await writeFile(this.dbFilename, JSON.stringify(this._data), 'utf-8');
+        this._save();
     }
 
     getAll() {
         return this._data;
+    }
+
+    getOne() {
+        return this._data.find(oneObj => oneObj.id === id)
     }
 
     update(id, newObj) {
@@ -37,7 +45,14 @@ class Db {
                 return oneObj;
             }
         });
-        writeFile(this.dbFilename, JSON.stringify(this._data), 'utf-8');
+        this._save();
+    }
+
+    delete(id) {
+        this._data = this._data.filter(toRemove => {
+            return toRemove.id !== id
+        });
+        this._save();
     }
 }
 
