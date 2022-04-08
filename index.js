@@ -1,5 +1,7 @@
 const express = require('express');
 const hbs  = require('express-handlebars');
+const {clientRouter} = require("./routers/client");
+const {homeRouter} = require("./routers/home");
 
 const app = express();
 
@@ -12,9 +14,8 @@ app.engine('.hbs', hbs.engine({extname: '.hbs'}));
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-app.get('/', (req, res) => {
-    res.render('test.hbs')
-})
+app.use('/client', clientRouter);
+app.use('/', homeRouter);
 
 app.listen(3000, 'localhost', ()=> {
     console.log('listen on 3000')
