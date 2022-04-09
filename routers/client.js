@@ -14,16 +14,24 @@ clientRouter
             client: db.getOne(req.params.id)
         })
     })
-    .post('/', (req, res) => {
-        res.send('dodaj');
+    .post('/', async(req, res) => {
+        const id = await db.create(req.body);
+        console.log(id);
+        res.render('client/added.hbs', {
+            name: req.body.name,
+            id: id
+        });
     })
     .put('/:id', (req, res) => {
         res.send('zmodyfikuj');
     })
-    .get('/:id', (req, res) => {
-        res.send('usuń');
+    .delete('/:id', (req, res) => {
+        db.delete(req.params.id);
+        res.render('client/delete.hbs')
     })
-
+    .get('/form/add', (req, res) => {
+        res.render('client/forms/add.hbs');
+    })
 
 module.exports = {
     clientRouter

@@ -5,13 +5,11 @@ const {v4: uuid} = require('uuid');
 class Db {
     constructor(dbFilename) {
         this.dbFilename = join(__dirname, '../data', dbFilename);
-        console.log(this.dbFilename);
         this._load();
     }
 
    async _load() {
        this._data = JSON.parse(await readFile(this.dbFilename,'utf8'));
-       console.log(this._data);
     }
 
     _save() {
@@ -19,11 +17,13 @@ class Db {
     }
 
     async create(obj) {
+        const id = uuid();
         this._data.push({
-            id: uuid(),
+            id:id,
             ...obj
         });
         this._save();
+        return id;
     }
 
     getAll() {
