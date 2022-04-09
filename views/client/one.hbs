@@ -6,7 +6,7 @@
       E-mail:
     </th>
     <td>
-      <a href="/client/{{client.email}}">{{client.name}}</a>
+      <a href="/client/{{client.email}}">{{client.mail}}</a>
     </td>
   </tr>
   <tr>
@@ -38,6 +38,9 @@
   </tbody>
 </table>
 
+<form action="/client/form/edit/{{client.id}}">
+  <button type="submit">Edit client</button>
+</form>
 <p>
   {{> go-to-clients}}
 </p>

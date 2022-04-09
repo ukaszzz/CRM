@@ -23,7 +23,13 @@ clientRouter
         });
     })
     .put('/:id', (req, res) => {
-        res.send('zmodyfikuj');
+        const id = req.params.id;
+        const update = db.update(req.params.id, req.body);
+        res.render('client/modified.hbs', {
+            name: req.body.name,
+            update,
+            id
+        })
     })
     .delete('/:id', (req, res) => {
         db.delete(req.params.id);
@@ -32,7 +38,11 @@ clientRouter
     .get('/form/add', (req, res) => {
         res.render('client/forms/add.hbs');
     })
-
+    .get('/form/edit/:id', (req, res) => {
+        res.render('client/forms/edit.hbs', {
+            client: db.getOne(req.params.id)
+        });
+    })
 module.exports = {
     clientRouter
 }
