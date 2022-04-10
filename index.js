@@ -4,6 +4,7 @@ const methodOverride = require('method-override');
 const {clientRouter} = require("./routers/client");
 const {homeRouter} = require("./routers/home");
 const {db} = require('./utils/db');
+const {handleError} = require("./utils/errors");
 
 const app = express();
 
@@ -14,11 +15,12 @@ app.use(express.urlencoded({
 app.use(express.static('public'));
 app.use(express.json());
 app.engine('.hbs', hbs.engine({extname: '.hbs'}));
-app.set('view engine', 'handlebars');
+app.set('view engine', '.hbs');
 app.set('views', './views');
 
-app.use('/client', clientRouter);
 app.use('/', homeRouter);
+app.use('/client', clientRouter);
+app.use(handleError)
 
 app.listen(3000, 'localhost', ()=> {
     console.log('listen on 3000')
