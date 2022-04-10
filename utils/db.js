@@ -1,30 +1,44 @@
-const {readFile, writeFile} = require('fs').promises;
-const {join} = require('path');
 const {v4: uuid} = require('uuid');
 const {ClientRecord} = require("../records/client-record");
+const mysql = require('mysql2/promise');
+const dotenv = require('dotenv');
 
+dotenv.config();
+
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: process.env.DB_USER,
+    database: 'CRM',
+    password: process.env.DB_PASSWORD,
+    namedPlaceholders: true,
+    decimalNumbers: true
+});
 
 class Db {
-    constructor(dbFilename) {
-        this.dbFilename = join(__dirname, '../data', dbFilename);
+    constructor() {
         this._load();
     }
 
     async _load() {
-        this._data = JSON.parse(await readFile(this.dbFilename,'utf8')).map(obj => new ClientRecord(obj));
+        const [client] = await pool.execute('SELECT * From `client`');
+        return this._data = client.map(obj => new ClientRecord(obj));
     }
 
-    _save() {
-        writeFile(this.dbFilename, JSON.stringify(this._data), 'utf8');
+    async _save(id,obj) {
+        await pool.execute(`INSERT INTO client VALUES(:id, :name, :email, :date, :notes)`, {
+            id: id,
+            name: obj.name,
+            email: obj.email,
+            date: obj.date,
+            notes: obj.notes
+        });
+        this._load()
     }
 
     create(obj) {
         const id = uuid();
-        this._data.push(new ClientRecord({
-            id,
-            ...obj,
-        }));
-        this._save();
+        this._save(id, obj);
+        this._load()
         return id;
     }
 
@@ -36,29 +50,27 @@ class Db {
         return this._data.find(oneObj => oneObj.id === id);
     }
 
-    update(id, newObj) {
-        this._data = this._data.map(oneObj => {
-            if (oneObj.id === id) {
-                return new ClientRecord({
-                    ...oneObj,
-                    ...newObj,
-                })
-            } else {
-                return oneObj;
-            }
-        })
-        this._save();
+    async update(id, obj) {
+        this._data =  await pool.execute("UPDATE `client` SET `name` = :name, `email` = :email, `date` = :date, " +
+            "`notes` = :notes WHERE `id` = :id", {
+            id: id,
+            name: obj.name,
+            email: obj.email,
+            date: obj.date,
+            notes: obj.notes
+        });
+        this._load()
     }
 
-    delete(id) {
-        this._data = this._data.filter(oneObj => oneObj.id !== id);
-        this._save(); //debounce
+    async delete(id) {
+        await pool.execute(`DELETE FROM client WHERE client.id = :id`, {
+            id
+        });
+        this._load()
     }
 }
 
 const db = new Db('client.json');
-
-
 
 module.exports = {
     db

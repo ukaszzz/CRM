@@ -1,8 +1,8 @@
-<h2>You are editing: {{client.name}} ({{client.mail}})</h2>
+<h2>You are editing: {{client.name}} ({{client.email}})</h2>
 <form method="post" action="/client/{{client.id}}?_method=PUT">
   <label>
     <p>e-mail:</p>
-    <input type="email" name="mail" value="{{client.mail}}">
+    <input type="email" name="email" value="{{client.email}}">
   </label>
   <label>
     <p>name:</p>
@@ -14,7 +14,7 @@
   </label>
   <label>
     <p>Contact at:</p>
-    <input type="date" name="nextContactAt" value="{{client.nextContactAt}}">
+    <input type="date" name="date" value="{{client.date}}">
   </label>
   <p><button type="submit">Save</button></p>
 </form>

@@ -18,17 +18,17 @@
   {{#each clients}}
   <tr>
     <th>
-      <a href="mailto:{{this.mail}}" target="_blank">{{this.mail}}</a>
+      <a href="mailto:{{this.email}}" target="_blank">{{this.email}}</a>
     </th>
     <td>
       <a href="/client/{{this.id}}">{{this.name}}</a>
     </td>
     <td>
-      {{this.nextContactAt}}
+      {{this.date}}
     </td>
     <td>
       <a href="/client/{{this.id}}">detail</a>
-      <form method="POST" action="/client/{{this.id}}?_method=DELETE">
+      <form method="POST" action="/client/deleted/{{this.id}}?_method=DELETE">
         <button type="submit">delete</button>
       </form>
     </td>
