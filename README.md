@@ -10,6 +10,7 @@ I don't focus on UI in the project
 ## Technologies and packages:
 
 - Express (https://expressjs.com/)
+- Express Handlebars (https://www.npmjs.com/package/express-handlebars)  
 - mysql (https://www.mysql.com/)
 - method-override (https://www.npmjs.com/package/method-override)
 - uuid (https://www.npmjs.com/package/uuid)
